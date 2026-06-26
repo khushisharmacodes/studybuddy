@@ -1,0 +1,616 @@
+You are a senior full stack engineer, elite UI/UX designer, product architect, and startup-level software developer.
+
+Build a COMPLETE production-quality MERN application called:
+
+“StudyBuddy”
+(A modern AI-powered productivity + study companion app for college students)
+
+The app should feel like:
+- Notion + Forest + Duolingo + Pinterest + Spotify focus mode combined
+- modern
+- cozy
+- aesthetic
+- emotionally engaging
+- smooth and premium
+- startup-quality
+- highly addictive for productivity
+
+IMPORTANT:
+Do NOT make a generic dashboard CRUD project.
+This should feel like a REAL polished SaaS/mobile app.
+
+====================================================
+CORE IDEA
+====================================================
+
+StudyBuddy is an intelligent productivity and study companion app.
+
+The app is NOT only for studying college subjects.
+
+Users may:
+- study college subjects
+- code
+- prepare for placements
+- use pomodoro for focus
+- journal
+- track productivity
+- prepare for interviews
+- watch lectures
+- self-study random topics
+- read books
+- simply use focus timer
+
+The app should adapt to all of these.
+
+====================================================
+MAIN EXPERIENCE
+====================================================
+
+The app revolves around:
+- a beautiful pomodoro/focus system
+- an emotional teddy companion
+- intelligent recommendations
+- academic tracking
+- productivity analytics
+- journaling
+- habit tracking
+- personalized focus experience
+
+The teddy companion is the emotional heart of the app.
+
+====================================================
+TECH STACK
+====================================================
+
+Frontend:
+- React + Vite
+- TailwindCSS
+- Framer Motion
+- Zustand
+- React Router DOM
+- Axios
+- Shadcn UI
+- Lucide React
+- Recharts
+- Lottie animations
+
+Backend:
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Auth
+- bcrypt
+- Node Cron
+- Puppeteer / Playwright
+- Cheerio
+- PDF parser
+- Socket.io
+- Redis caching (optional architecture ready)
+
+====================================================
+VERY IMPORTANT UI REQUIREMENTS
+====================================================
+
+The UI is EXTREMELY important.
+
+I want:
+- glassmorphism
+- pastel gradients
+- floating UI cards
+- animated backgrounds
+- premium typography
+- smooth transitions
+- cute productivity vibes
+- modern mobile-first responsive design
+- animated mascot/teddy
+- aesthetic dashboards
+- beautiful empty states
+- microinteractions
+- smooth hover effects
+- focus mode animations
+- gamified progress system
+- soft shadows
+- blurred layered backgrounds
+- premium app feel
+
+The app should feel:
+- alive
+- interactive
+- emotional
+- cozy
+
+NOT:
+- boring admin dashboard
+- bootstrap template
+- plain coding project
+
+====================================================
+AUTHENTICATION
+====================================================
+
+Implement:
+- Signup
+- Login
+- JWT auth
+- Persistent sessions
+- Protected routes
+- Logout
+
+User fields:
+- name
+- email
+- password
+- college
+- branch
+- semester
+- optional daily study goal
+- interests
+- preferred study categories
+
+====================================================
+CORE FEATURES
+====================================================
+
+====================================================
+1. LANDING PAGE
+====================================================
+
+Create an incredible landing page.
+
+Include:
+- animated hero section
+- teddy animation
+- productivity stats
+- feature showcase
+- testimonials section
+- focus mode preview
+- aesthetic gradients
+- modern CTA sections
+
+====================================================
+2. DASHBOARD
+====================================================
+
+Dashboard should include:
+- greeting
+- teddy widget
+- today's focus time
+- streaks
+- study analytics
+- upcoming exams
+- today's tasks
+- goals
+- pomodoro quick start
+- motivational quote
+- recent journal
+- focus insights
+- upcoming deadlines
+- weak subject alerts
+- productivity graph
+
+====================================================
+3. POMODORO / FOCUS TIMER
+====================================================
+
+This is the MAIN feature.
+
+Features:
+- start/pause/reset
+- custom durations
+- focus/break cycles
+- fullscreen focus mode
+- ambient sounds
+- animated progress ring
+- session analytics
+- focus history
+- category tagging
+
+Users should be able to study:
+- DSA
+- Web Dev
+- OS
+- ML
+- random self-study
+- reading
+- coding
+- interview prep
+- or anything else
+
+NOT limited to college subjects.
+
+====================================================
+4. TEDDY COMPANION SYSTEM
+====================================================
+
+Animated teddy companion.
+
+States:
+- idle
+- studying
+- sleepy
+- sad
+- happy
+- excited
+- celebrating
+- motivational
+
+Teddy reacts based on:
+- study hours
+- streaks
+- inactivity
+- missed goals
+- completed pomodoros
+- exam countdowns
+
+Examples:
+- happy when user studies consistently
+- sleepy after inactivity
+- excited after 4+ hour study day
+- worried near exams
+- celebrating streak milestones
+
+Use:
+- Lottie animations or animated SVGs
+
+====================================================
+5. GOALS SYSTEM
+====================================================
+
+Allow users to:
+- add daily goals
+- add weekly goals
+- optional study hour goals
+- task completion tracking
+- productivity tracking
+
+Study hour goals should be OPTIONAL.
+
+====================================================
+6. JOURNAL / DIARY
+====================================================
+
+Beautiful journaling system.
+
+Features:
+- daily reflections
+- weekly reflections
+- markdown support
+- mood tracking
+- productivity feelings
+- searchable entries
+- cozy writing UI
+
+Should feel similar to:
+- Notion
+- modern journaling apps
+
+====================================================
+7. COLLEGE DATA SYSTEM
+====================================================
+
+IMPORTANT:
+Do NOT rely on admin uploads initially.
+
+The app must automatically fetch academic data from official college websites.
+
+Start with:
+- NIT Kurukshetra official website
+
+Automatically fetch:
+- exam schedules
+- syllabus PDFs
+- notices
+- timetables
+- academic calendar
+- postponement notices
+- revised schedules
+
+Use:
+- Puppeteer / Playwright
+- Cheerio
+- PDF parsers
+- cron jobs
+
+====================================================
+8. REAL-TIME ACADEMIC UPDATE SYSTEM
+====================================================
+
+The app should continuously monitor official websites.
+
+If exams are postponed:
+- update countdowns
+- notify users
+- update dashboard
+- teddy reacts emotionally
+
+If updated schedule is not available:
+SHOW:
+- “Updated exam schedule has not been uploaded yet.”
+- “Awaiting official notice from NIT Kurukshetra.”
+- “Last checked: <timestamp>”
+
+NEVER hallucinate dates.
+
+====================================================
+9. RECOMMENDATION SYSTEM
+====================================================
+
+VERY IMPORTANT.
+
+The app should intelligently recommend:
+- YouTube videos
+- articles
+- playlists
+- coding sheets
+- notes
+- tutorials
+- productivity content
+
+Recommendations should be based on:
+- subjects user studies
+- branch/semester
+- weak subjects
+- upcoming exams
+- user interests
+- pomodoro tags
+- journal patterns
+- study history
+
+Examples:
+- user studies DSA frequently → recommend Striver/Neetcode
+- weak in DBMS → recommend DBMS playlists/articles
+- exam near OS → recommend OS revision videos
+- user studies Web Dev → recommend React/Node resources
+- placement prep → recommend interview sheets
+
+====================================================
+10. FLEXIBLE PRODUCTIVITY SYSTEM
+====================================================
+
+IMPORTANT:
+Do NOT assume all users study college subjects only.
+
+Users may use pomodoro for:
+- coding
+- freelancing
+- reading
+- gym focus
+- placements
+- personal learning
+- side projects
+
+The recommendation engine should adapt dynamically.
+
+====================================================
+11. MARKS + WEAK SUBJECT TRACKING
+====================================================
+
+Users can input:
+- quiz marks
+- internals
+- test scores
+
+The app should:
+- identify weak subjects
+- remind users
+- prioritize recommendations
+- suggest focus plans
+
+====================================================
+12. ANALYTICS SYSTEM
+====================================================
+
+Create beautiful analytics.
+
+Include:
+- daily focus graphs
+- streaks
+- heatmaps
+- subject-wise analytics
+- category-wise analytics
+- productivity insights
+- weekly reports
+
+Use:
+- Recharts
+
+====================================================
+13. NOTIFICATION SYSTEM
+====================================================
+
+Implement:
+- exam alerts
+- schedule changes
+- study reminders
+- streak reminders
+- weak subject reminders
+- productivity nudges
+- pomodoro reminders
+
+Use:
+- in-app notifications
+- backend cron jobs
+- optional push architecture
+
+====================================================
+14. GAMIFICATION
+====================================================
+
+Include:
+- XP system
+- streaks
+- levels
+- achievements
+- milestone rewards
+- teddy unlocks
+- productivity badges
+
+====================================================
+15. ADMIN PANEL
+====================================================
+
+Admin uploads become OPTIONAL fallback only.
+
+Primary system:
+automatic official data fetching.
+
+Admin can:
+- manually override scraped data
+- upload missing schedules
+- approve updates
+- manage announcements
+
+====================================================
+BACKEND REQUIREMENTS
+====================================================
+
+Create:
+- proper REST APIs
+- modular controllers
+- services architecture
+- middleware
+- auth middleware
+- validation
+- scalable architecture
+- reusable scraper services
+
+====================================================
+SCRAPER ARCHITECTURE
+====================================================
+
+backend/
+  services/
+    scraper/
+      examScraper.js
+      syllabusScraper.js
+      timetableScraper.js
+      noticeScraper.js
+      pdfParser.js
+      changeDetector.js
+
+====================================================
+DATABASE DESIGN
+====================================================
+
+Create schemas for:
+- users
+- pomodoro sessions
+- goals
+- journals
+- recommendations
+- exams
+- notices
+- syllabus
+- marks
+- analytics
+- notifications
+
+====================================================
+STATE MANAGEMENT
+====================================================
+
+Use Zustand.
+
+Create stores for:
+- auth
+- pomodoro
+- dashboard
+- recommendations
+- notifications
+- journal
+- analytics
+
+====================================================
+FRONTEND STRUCTURE
+====================================================
+
+Create professional scalable structure:
+
+frontend/
+  src/
+    components/
+    pages/
+    layouts/
+    hooks/
+    store/
+    services/
+    animations/
+    assets/
+    lib/
+    utils/
+    routes/
+    context/
+
+====================================================
+IMPORTANT ENGINEERING REQUIREMENTS
+====================================================
+
+- scalable architecture
+- reusable components
+- clean code
+- modern React patterns
+- hooks-based architecture
+- production-quality folder structure
+- responsive design
+- accessibility support
+- optimized performance
+- lazy loading
+- skeleton loaders
+- caching strategy
+- error boundaries
+- retry handling
+- logging system
+- API abstraction layer
+
+====================================================
+FUTURE ML READY
+====================================================
+
+Architecture should support future:
+- AI recommendations
+- adaptive study plans
+- burnout prediction
+- smart pomodoro timing
+- personalized productivity insights
+- GPA prediction
+- learning pattern analysis
+
+For now:
+implement rule-based recommendation system.
+
+====================================================
+GENERATE NOW
+====================================================
+
+Generate in COMPLETE detail:
+
+1. Full project architecture
+2. Frontend folder structure
+3. Backend folder structure
+4. All npm install commands
+5. Complete setup steps
+6. UI design system
+7. Color palette
+8. Fonts
+9. Dashboard wireframe
+10. Landing page wireframe
+11. Authentication flow
+12. MongoDB schemas
+13. API routes
+14. Zustand architecture
+15. Scraper architecture
+16. Cron jobs
+17. Recommendation engine structure
+18. Pomodoro architecture
+19. Teddy animation system
+20. Analytics system
+21. Notification architecture
+22. Mobile responsiveness strategy
+23. Deployment architecture
+24. Future ML integration plan
+25. Step-by-step implementation roadmap
+
+DO NOT give vague explanations.
+
+Generate production-quality architecture and implementation.
