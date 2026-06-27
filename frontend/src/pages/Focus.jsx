@@ -156,8 +156,9 @@ export default function Focus() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-6 items-start">
-        <Card className="md:col-span-2 flex flex-col items-center justify-start self-start !p-5">
-          <div className="relative mb-4">
+        <div className="md:col-span-2 space-y-4">
+          <Card className="flex flex-col items-center justify-start self-start !p-5">
+            <div className="relative mb-4">
             <svg width="240" height="240" className="transform -rotate-90">
               <circle cx="120" cy="120" r="100" stroke="#e7e5e4" strokeWidth="12" fill="none" />
               <motion.circle
@@ -211,7 +212,42 @@ export default function Focus() {
               {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
             </Button>
           </div>
-        </Card>
+          </Card>
+
+          {category !== 'General' && (
+            <Card>
+              <h3 className="font-display font-bold text-stone-800 mb-4">Recommended for {category}</h3>
+              {recsLoading ? (
+                <p className="text-stone-500 text-sm">Loading study resources...</p>
+              ) : subjectRecs.length === 0 ? (
+                <p className="text-stone-500 text-sm">No resources found for {category} yet.</p>
+              ) : (
+                <div className="grid md:grid-cols-2 gap-4">
+                  {subjectRecs.slice(0, 4).map((rec) => (
+                    <a
+                      key={rec.url}
+                      href={rec.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block p-4 rounded-2xl bg-white/60 hover:bg-white transition-colors"
+                    >
+                      <p className="font-medium text-stone-800 truncate">{rec.title}</p>
+                      <p className="text-xs text-stone-500 mt-1 line-clamp-2">{rec.description}</p>
+                      <div className="flex items-center gap-2 mt-3">
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 capitalize">
+                          {rec.type}
+                        </span>
+                        {rec.relevanceScore && (
+                          <span className="text-xs text-stone-400">{rec.relevanceScore}% match</span>
+                        )}
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </Card>
+          )}
+        </div>
 
         <div className="space-y-4">
           <Card>
@@ -376,40 +412,6 @@ export default function Focus() {
           </Card>
         </div>
       </div>
-
-      {category !== 'General' && (
-        <Card className="mt-4">
-          <h3 className="font-display font-bold text-stone-800 mb-4">Recommended for {category}</h3>
-          {recsLoading ? (
-            <p className="text-stone-500 text-sm">Loading study resources...</p>
-          ) : subjectRecs.length === 0 ? (
-            <p className="text-stone-500 text-sm">No resources found for {category} yet.</p>
-          ) : (
-            <div className="grid md:grid-cols-3 gap-4">
-              {subjectRecs.slice(0, 6).map((rec) => (
-                <a
-                  key={rec.url}
-                  href={rec.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block p-4 rounded-2xl bg-white/60 hover:bg-white transition-colors"
-                >
-                  <p className="font-medium text-stone-800 truncate">{rec.title}</p>
-                  <p className="text-xs text-stone-500 mt-1 line-clamp-2">{rec.description}</p>
-                  <div className="flex items-center gap-2 mt-3">
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-violet-100 text-violet-700 capitalize">
-                      {rec.type}
-                    </span>
-                    {rec.relevanceScore && (
-                      <span className="text-xs text-stone-400">{rec.relevanceScore}% match</span>
-                    )}
-                  </div>
-                </a>
-              ))}
-            </div>
-          )}
-        </Card>
-      )}
 
       <Card className="mt-4">
         <h3 className="font-display font-bold text-stone-800 mb-4">Today&apos;s Sessions</h3>
