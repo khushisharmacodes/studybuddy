@@ -9,6 +9,27 @@ const EAR_THRESHOLD = 0.18;
 const DROWSY_FRAMES_THRESHOLD = 10;
 const NO_FACE_FRAMES_THRESHOLD = 15;
 
+const notifyUser = (title, body) => {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    try {
+      new Notification(title, { body, icon: '/icon-192.png' });
+    } catch (error) {
+      console.error('Notification failed', error);
+    }
+  }
+};
+
+const requestNotificationPermission = async () => {
+  if (!('Notification' in window)) return;
+  try {
+    if (Notification.permission === 'default') {
+      await Notification.requestPermission();
+    }
+  } catch (error) {
+    console.error('Notification permission request failed', error);
+  }
+};
+
 const playAlertSound = async () => {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
