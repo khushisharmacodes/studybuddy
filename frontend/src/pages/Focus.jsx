@@ -141,13 +141,13 @@ export default function Focus() {
     ? ((breakDuration * 60 - timeLeft) / (breakDuration * 60)) * 100
     : ((duration * 60 - timeLeft) / (duration * 60)) * 100;
 
-  const circumference = 2 * Math.PI * 120;
+  const circumference = 2 * Math.PI * 100;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   const focusContent = (
     <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-display font-bold text-stone-800">
+      <div className="text-center mb-4">
+        <h1 className="text-2xl md:text-3xl font-display font-bold text-stone-800">
           {isBreak ? 'Take a cozy break' : 'Time to focus'}
         </h1>
         <p className="text-stone-500 mt-2">
@@ -156,14 +156,14 @@ export default function Focus() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
-        <Card className="md:col-span-2 flex flex-col items-center justify-center min-h-[420px]">
-          <div className="relative mb-8">
-            <svg width="280" height="280" className="transform -rotate-90">
-              <circle cx="140" cy="140" r="120" stroke="#e7e5e4" strokeWidth="12" fill="none" />
+        <Card className="md:col-span-2 flex flex-col items-center justify-center !p-5">
+          <div className="relative mb-4">
+            <svg width="240" height="240" className="transform -rotate-90">
+              <circle cx="120" cy="120" r="100" stroke="#e7e5e4" strokeWidth="12" fill="none" />
               <motion.circle
-                cx="140"
-                cy="140"
-                r="120"
+                cx="120"
+                cy="120"
+                r="100"
                 stroke="url(#gradient)"
                 strokeWidth="12"
                 fill="none"
@@ -180,7 +180,7 @@ export default function Focus() {
               </defs>
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-6xl font-display font-bold text-stone-800 tabular-nums">
+              <span className="text-5xl font-display font-bold text-stone-800 tabular-nums">
                 {formatTime(timeLeft)}
               </span>
               <span className="text-stone-500 mt-2 font-medium">
@@ -213,7 +213,7 @@ export default function Focus() {
           </div>
         </Card>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           <Card>
             <h3 className="font-display font-bold text-stone-800 mb-4">Category</h3>
             <div className="flex flex-wrap gap-2 pr-1">
@@ -378,7 +378,7 @@ export default function Focus() {
       </div>
 
       {category !== 'General' && (
-        <Card className="mt-6">
+        <Card className="mt-4">
           <h3 className="font-display font-bold text-stone-800 mb-4">Recommended for {category}</h3>
           {recsLoading ? (
             <p className="text-stone-500 text-sm">Loading study resources...</p>
@@ -411,7 +411,7 @@ export default function Focus() {
         </Card>
       )}
 
-      <Card className="mt-6">
+      <Card className="mt-4">
         <h3 className="font-display font-bold text-stone-800 mb-4">Today&apos;s Sessions</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           <div className="p-4 rounded-2xl bg-violet-50 text-center">
