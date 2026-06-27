@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingUp, Clock, Target, Award, Zap, Calendar } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
 import Card from '../components/ui/Card.jsx';
 import Skeleton from '../components/ui/Skeleton.jsx';
 import TeddyCompanion from '../components/teddy/TeddyCompanion.jsx';
@@ -120,7 +121,7 @@ export default function Analytics() {
                         </div>
                       )}
                     </motion.div>
-                    <span className="text-[10px] text-stone-500">{day.date.slice(5)}</span>
+                    <span className="text-[10px] text-stone-500">{format(parseISO(day.date), 'EEE')}</span>
                   </div>
                 );
               })}
@@ -169,7 +170,8 @@ export default function Analytics() {
             {analytics.heatmapData.map((day, idx) => (
               <div
                 key={idx}
-                title={`${day.date}: ${day.minutes} minutes`}
+                title={`${format(parseISO(day.date), 'MMM d, yyyy')}: ${day.minutes} minutes`}
+                aria-label={`${format(parseISO(day.date), 'MMM d, yyyy')}: ${day.minutes} minutes`}
                 className={`w-8 h-8 rounded-lg ${getHeatmapColor(day.minutes)} transition-colors hover:scale-110`}
               />
             ))}
@@ -194,7 +196,7 @@ export default function Analytics() {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-4 rounded-2xl bg-violet-50">
               <p className="text-xs text-violet-600 mb-1">Best Day</p>
-              <p className="font-bold text-violet-800">{insights.bestDay.date}</p>
+              <p className="font-bold text-violet-800">{format(parseISO(insights.bestDay.date), 'MMM d, yyyy')}</p>
               <p className="text-sm text-violet-700">{insights.bestDay.minutes} minutes</p>
             </div>
             <div className="p-4 rounded-2xl bg-teal-50">

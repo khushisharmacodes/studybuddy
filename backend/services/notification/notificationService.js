@@ -78,6 +78,7 @@ const generateStreakNotifications = async () => {
     today.setHours(0, 0, 0, 0);
 
     const users = await User.find({
+      streak: { $gt: 0 },
       $or: [
         { lastStudyDate: { $lt: today } },
         { lastStudyDate: { $exists: false } },
@@ -85,19 +86,63 @@ const generateStreakNotifications = async () => {
     });
 
     for (const user of users) {
-      if (user.streak > 0) {
-        await createIfNotExists(
-          user._id,
-          'streak',
-          'Keep your streak alive! 🔥',
-          `You have a ${user.streak}-day streak. Study today to keep it going!`,
-          { streak: user.streak }
-        );
-      }
+      await createIfNotExists(
+        user._id,
+        'streak',
+        'Keep your streak alive! 🔥',
+        `You have a ${user.streak}-day streak. Study today to keep it going!`,
+        { streak: user.streak }
+      );
     }
-    logger.info('Generated streak notifications');
+    logger.info(`Generated morning streak notifications for ${users.length} users`);
   } catch (error) {
     logger.error('Streak notification generation failed:', error);
+  }
+};
+
+const generateStreakBreakRiskNotifications = async () => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const users = await User.find({
+      streak: { $gt: 0 },
+      $or: [
+        { lastStudyDate: { $lt: today } },
+        { lastStudyDate: { $exists: false } },
+      ],
+    });
+
+    for (const user of users) {
+      await createIfNotExists(
+        user._id,
+        'streak_risk',
+        'Your streak ends at midnight! ⏰',
+        `You have a ${user.streak}-day streak. Start a quick focus session before midnight to keep it alive!`,
+        { streak: user.streak }
+      );
+    }
+    logger.info(`Generated streak break-risk notifications for ${users.length} users`);
+  } catch (error) {
+    logger.error('Streak break-risk notification generation failed:', error);
+  }
+};
+
+const resetExpiredStreaks = async () => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const result = await User.updateMany(
+      { lastStudyDate: { $lt: yesterday }, streak: { $gt: 0 } },
+      { $set: { streak: 0 } }
+    );
+
+    logger.info(`Reset expired streaks for ${result.modifiedCount} users`);
+  } catch (error) {
+    logger.error('Reset expired streaks failed:', error);
   }
 };
 
@@ -207,8 +252,10 @@ const runAllNotificationGenerators = async () => {
 export {
   generateExamNotifications,
   generateStreakNotifications,
+  generateStreakBreakRiskNotifications,
   generateGoalNotifications,
   generateWeakSubjectNotifications,
   generateStudyReminderNotifications,
+  resetExpiredStreaks,
   runAllNotificationGenerators,
 };

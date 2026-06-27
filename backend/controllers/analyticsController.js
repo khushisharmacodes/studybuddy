@@ -2,6 +2,12 @@ import PomodoroSession from '../models/PomodoroSession.js';
 import Mark from '../models/Mark.js';
 import Goal from '../models/Goal.js';
 
+const toLocalISODate = (date) => {
+  const d = new Date(date);
+  const offset = d.getTimezoneOffset() * 60000;
+  return new Date(d.getTime() - offset).toISOString().split('T')[0];
+};
+
 const getDashboardAnalytics = async (req, res, next) => {
   try {
     const now = new Date();
@@ -36,11 +42,11 @@ const getDashboardAnalytics = async (req, res, next) => {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
       d.setHours(0, 0, 0, 0);
-      dailyMap[d.toISOString().split('T')[0]] = 0;
+      dailyMap[toLocalISODate(d)] = 0;
     }
 
     weeklySessions.forEach((s) => {
-      const dateKey = new Date(s.startedAt).toISOString().split('T')[0];
+      const dateKey = toLocalISODate(s.startedAt);
       if (dailyMap[dateKey] !== undefined) dailyMap[dateKey] += s.duration;
     });
 
@@ -54,11 +60,11 @@ const getDashboardAnalytics = async (req, res, next) => {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
       d.setHours(0, 0, 0, 0);
-      heatmapMap[d.toISOString().split('T')[0]] = 0;
+      heatmapMap[toLocalISODate(d)] = 0;
     }
 
     monthlySessions.forEach((s) => {
-      const dateKey = new Date(s.startedAt).toISOString().split('T')[0];
+      const dateKey = toLocalISODate(s.startedAt);
       if (heatmapMap[dateKey] !== undefined) heatmapMap[dateKey] += s.duration;
     });
 

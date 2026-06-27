@@ -1,0 +1,25 @@
+{
+  "name": "StudyBuddy — Your AI Study Companion",
+  "short_name": "StudyBuddy",
+  "description": "A cozy Pomodoro timer, study tracker, exam scheduler, and smart recommendation companion for students.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#8b5cf6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

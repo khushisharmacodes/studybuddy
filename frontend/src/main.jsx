@@ -8,3 +8,16 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/service-worker.js')
+      .then((registration) => {
+        console.log('StudyBuddy SW registered:', registration.scope)
+      })
+      .catch((error) => {
+        console.error('StudyBuddy SW registration failed:', error)
+      })
+  })
+}
