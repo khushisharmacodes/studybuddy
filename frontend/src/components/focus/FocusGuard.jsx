@@ -5,13 +5,16 @@ import { Camera, CameraOff, AlertTriangle } from 'lucide-react';
 import Button from '../ui/Button.jsx';
 
 const MODEL_URL = 'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights';
-const EAR_THRESHOLD = 0.2;
-const DROWSY_FRAMES_THRESHOLD = 15;
-const NO_FACE_FRAMES_THRESHOLD = 30;
+const EAR_THRESHOLD = 0.18;
+const DROWSY_FRAMES_THRESHOLD = 10;
+const NO_FACE_FRAMES_THRESHOLD = 15;
 
-const playAlertSound = () => {
+const playAlertSound = async () => {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') {
+      await ctx.resume();
+    }
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = 'sine';
@@ -137,6 +140,8 @@ export default function FocusGuard({ isRunning, onDrowsy }) {
         if (now - lastAlertTime.current > 5000) {
           lastAlertTime.current = now;
           playAlertSound();
+          if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+          notifyUser('Wake up, buddy!', 'You look sleepy — stay focused 🧸');
           setAlertShown(true);
           onDrowsy?.();
           setTimeout(() => setAlertShown(false), 3000);
@@ -149,6 +154,8 @@ export default function FocusGuard({ isRunning, onDrowsy }) {
         if (now - lastAlertTime.current > 8000) {
           lastAlertTime.current = now;
           playAlertSound();
+          if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+          notifyUser('Where did you go?', 'Focus Guard cannot see you 🧸');
           setAlertShown(true);
           onDrowsy?.();
           setTimeout(() => setAlertShown(false), 3000);
@@ -192,7 +199,10 @@ export default function FocusGuard({ isRunning, onDrowsy }) {
           type="button"
           variant={enabled ? 'cozy' : 'secondary'}
           size="sm"
-          onClick={() => setEnabled(!enabled)}
+          onClick={async () => {
+            if (!enabled) await requestNotificationPermission();
+            setEnabled(!enabled);
+          }}
           isLoading={loading}
         >
           {enabled ? 'On' : 'Off'}
