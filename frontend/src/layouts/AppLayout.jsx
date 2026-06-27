@@ -14,8 +14,10 @@ import {
   X,
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
+import { RefreshCw } from 'lucide-react';
 import useAuthStore from '../store/authStore.js';
 import useNotificationStore from '../store/notificationStore.js';
+import usePWAUpdate from '../hooks/usePWAUpdate.js';
 
 const baseNavItems = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -62,6 +64,7 @@ export default function AppLayout() {
   };
 
   const unread = unreadCount();
+  const { isUpdateAvailable, applyUpdate } = usePWAUpdate();
 
   return (
     <div className="min-h-screen flex bg-gradient-mesh">
@@ -205,6 +208,20 @@ export default function AppLayout() {
 
       {/* Main Content */}
       <main className="flex-1 min-w-0 pt-16 lg:pt-0">
+        {isUpdateAvailable && (
+          <div className="px-4 lg:px-8 pt-4">
+            <div className="bg-violet-600 text-white rounded-2xl px-4 py-3 flex items-center justify-between gap-3 shadow-lg shadow-violet-200">
+              <span className="text-sm font-medium">A new version of StudyBuddy is available.</span>
+              <button
+                onClick={applyUpdate}
+                className="flex items-center gap-1.5 bg-white text-violet-700 text-sm font-bold px-3 py-1.5 rounded-xl hover:bg-violet-50 transition-colors"
+              >
+                <RefreshCw className="w-4 h-4" />
+                Upgrade
+              </button>
+            </div>
+          </div>
+        )}
         <div className="p-4 lg:p-8 max-w-7xl mx-auto">
           <Outlet />
         </div>
