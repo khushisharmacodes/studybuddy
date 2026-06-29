@@ -7,6 +7,7 @@
 
 Built with **React, Vite, Tailwind CSS, Node.js, Express, and MongoDB**, it demonstrates full-stack development, state management, REST API design, real-time notifications, PWA deployment, and computer-vision integration in the browser.
 
+
 ## ✨ Features
 
 - 🔐 JWT Authentication (signup/login/logout)
