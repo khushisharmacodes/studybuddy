@@ -10,14 +10,6 @@ import {
 const baseResourceDatabase = [
   // DSA
   {
-    title: 'Striver’s SDE Sheet',
-    description: 'Curated DSA problems for interview preparation.',
-    type: 'sheet',
-    url: 'https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/',
-    category: 'DSA',
-    tags: ['dsa', 'interview', 'placement'],
-  },
-  {
     title: 'NeetCode 150',
     description: 'A better way to prepare for coding interviews.',
     type: 'playlist',

@@ -17,6 +17,8 @@ const defaultCategories = [
   'Interview Prep', 'Placements', 'Freelancing', 'Gym Focus', 'Side Project'
 ];
 
+const nonAcademicCategories = ['Gym Focus', 'Reading', 'Freelancing', 'Side Project'];
+
 const ambientSounds = ['Rain', 'Forest', 'Lo-Fi'];
 
 export default function Focus() {
@@ -82,7 +84,7 @@ export default function Focus() {
   }, [searchParams, setCategory, categories]);
 
   useEffect(() => {
-    if (category === 'General') {
+    if (category === 'General' || nonAcademicCategories.includes(category)) {
       setSubjectRecs([]);
       return;
     }
@@ -214,7 +216,7 @@ export default function Focus() {
           </div>
           </Card>
 
-          {category !== 'General' && (
+          {category !== 'General' && !nonAcademicCategories.includes(category) && (
             <Card>
               <h3 className="font-display font-bold text-stone-800 mb-4">Recommended for {category}</h3>
               {recsLoading ? (
@@ -245,6 +247,15 @@ export default function Focus() {
                   ))}
                 </div>
               )}
+            </Card>
+          )}
+
+          {nonAcademicCategories.includes(category) && (
+            <Card>
+              <h3 className="font-display font-bold text-stone-800 mb-2">{category}</h3>
+              <p className="text-stone-500 text-sm">
+                No study recommendations here — just focus on your session. You got this.
+              </p>
             </Card>
           )}
         </div>

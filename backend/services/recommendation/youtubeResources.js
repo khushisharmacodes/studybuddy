@@ -4,14 +4,6 @@
 const youtubeResources = [
   // DSA & Interview Prep
   {
-    title: 'Striver (take U forward)',
-    description: 'DSA sheets, interview prep and placement strategies.',
-    type: 'channel',
-    url: 'https://www.youtube.com/@takeUforward',
-    category: 'DSA',
-    tags: ['dsa', 'interview', 'placement', 'youtube'],
-  },
-  {
     title: 'NeetCode',
     description: 'Blind 75, NeetCode 150 and System Design.',
     type: 'channel',
