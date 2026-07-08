@@ -1,17 +1,22 @@
 {
   "name": "studybuddy",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "StudyBuddy - AI-powered productivity and study companion app",
   "private": true,
+  "main": "desktop/main.js",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
-    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "kill-ports": "kill-port 5000 5173 5174",
+    "dev": "npm run kill-ports && concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
     "start": "cd backend && npm start",
-    "build": "cd frontend && npm run build",
-    "test": "cd backend && npm test"
+    "build": "cd frontend && npm run build && cp public/icon.ico dist/icon.ico",
+    "test": "cd backend && npm test",
+    "electron:dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "electron:dist": "npm run electron:build -- --publish=never"
   },
   "keywords": [
     "study",
@@ -24,6 +29,71 @@
   "author": "StudyBuddy Team",
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "electron": "^32.3.3",
+    "electron-builder": "^25.1.8",
+    "kill-port": "^2.0.1",
+    "wait-on": "^8.0.5"
+  },
+  "build": {
+    "appId": "com.studybuddy.app",
+    "productName": "StudyBuddy",
+    "copyright": "Copyright © 2026 StudyBuddy",
+    "directories": {
+      "output": "release",
+      "buildResources": "frontend/public"
+    },
+    "files": [
+      "desktop/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": [
+          "**/*",
+          "!node_modules/.cache",
+          "!coverage",
+          "!tests",
+          "!logs",
+          "!.env*",
+          "!data",
+          "!.gitignore",
+          "!README.md"
+        ]
+      },
+      {
+        "from": "frontend/dist",
+        "to": "frontend/dist"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "frontend/public/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "frontend/public/icon.ico",
+      "category": "public.app-category.education"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "frontend/public/icon.ico",
+      "category": "Education"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "khushisharmacodes",
+      "repo": "studybuddy"
+    }
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9"
   }
 }

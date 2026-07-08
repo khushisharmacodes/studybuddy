@@ -19,6 +19,8 @@ const buildInitialState = () => ({
   phaseCount: 0,
   sessions: [],
   todayStats: { totalMinutes: 0, sessionsCompleted: 0 },
+  timerStartedAt: null,
+  timeLeftAtStart: null,
 });
 
 const getCurrentUserId = () => {
@@ -47,6 +49,9 @@ const loadPersistedState = () => {
     if (saved.isRunning && saved.timestamp) {
       const elapsedSeconds = Math.floor((Date.now() - saved.timestamp) / 1000);
       saved.timeLeft = Math.max(0, saved.timeLeft - elapsedSeconds);
+      // Reset wall-clock tracking so the next start resumes from the recovered time.
+      saved.timerStartedAt = null;
+      saved.timeLeftAtStart = null;
     }
     return saved;
   } catch (error) {
@@ -68,6 +73,8 @@ const persistState = (state) => {
       sessionId: state.sessionId,
       phaseCount: state.phaseCount,
       timestamp: Date.now(),
+      timerStartedAt: state.timerStartedAt,
+      timeLeftAtStart: state.timeLeftAtStart,
     };
     localStorage.setItem(getStorageKey(), JSON.stringify(snapshot));
   } catch (error) {
@@ -108,33 +115,67 @@ const usePomodoroStore = create((set, get) => {
     },
 
     tick: () => {
-      const { timeLeft, isRunning } = get();
-      if (isRunning && timeLeft > 0) {
+      const { timeLeft, isRunning, timerStartedAt, timeLeftAtStart } = get();
+      if (!isRunning) return;
+
+      // Use wall-clock time so the timer stays accurate even when the renderer
+      // is throttled in the background.
+      if (timerStartedAt && timeLeftAtStart !== null) {
+        const elapsedSeconds = Math.floor((Date.now() - timerStartedAt) / 1000);
+        const newTimeLeft = Math.max(0, timeLeftAtStart - elapsedSeconds);
+        if (newTimeLeft !== timeLeft) {
+          set({ timeLeft: newTimeLeft });
+          persistState(get());
+        }
+        if (newTimeLeft === 0) {
+          get().completePhase();
+        }
+        return;
+      }
+
+      if (timeLeft > 0) {
         set({ timeLeft: timeLeft - 1 });
         persistState(get());
-      } else if (isRunning && timeLeft === 0) {
+      } else if (timeLeft === 0) {
         get().completePhase();
       }
     },
 
     startTimer: () => {
-      set({ isRunning: true });
+      const { timeLeft } = get();
+      set({
+        isRunning: true,
+        timerStartedAt: Date.now(),
+        timeLeftAtStart: timeLeft,
+      });
       persistState(get());
     },
     pauseTimer: () => {
-      set({ isRunning: false });
+      set({ isRunning: false, timerStartedAt: null, timeLeftAtStart: null });
       persistState(get());
     },
 
     startSession: async () => {
       const { duration, category } = get();
+      const startTimeLeft = duration * 60;
       try {
         const { data } = await pomodoroService.startSession({ category, duration });
-        set({ sessionId: data.session._id, timeLeft: duration * 60, isRunning: true, isBreak: false });
+        set({
+          sessionId: data.session._id,
+          timeLeft: startTimeLeft,
+          isRunning: true,
+          isBreak: false,
+          timerStartedAt: Date.now(),
+          timeLeftAtStart: startTimeLeft,
+        });
         persistState(get());
       } catch (error) {
         console.error('Failed to start session', error);
-        set({ isRunning: true });
+        set({
+          isRunning: true,
+          timerStartedAt: Date.now(),
+          timeLeftAtStart: startTimeLeft,
+        });
       }
     },
 
@@ -157,6 +198,8 @@ const usePomodoroStore = create((set, get) => {
         isRunning: false,
         sessionId: null,
         phaseCount: nextPhaseCount,
+        timerStartedAt: null,
+        timeLeftAtStart: null,
       });
       persistState(get());
       get().fetchTodayStats();
@@ -173,7 +216,13 @@ const usePomodoroStore = create((set, get) => {
           console.error('Failed to abandon session', error);
         }
       }
-      set({ timeLeft: isBreak ? breakDuration * 60 : duration * 60, isRunning: false, sessionId: null });
+      set({
+        timeLeft: isBreak ? breakDuration * 60 : duration * 60,
+        isRunning: false,
+        sessionId: null,
+        timerStartedAt: null,
+        timeLeftAtStart: null,
+      });
       persistState(get());
       get().fetchTodayStats();
       get().fetchSessions();
